@@ -18,6 +18,7 @@ import { ProductModal } from './components/ProductModal';
 import { CartDrawer } from './components/CartDrawer';
 import { Footer } from './components/Footer';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import { INITIAL_PRODUCTS, Product } from './data/products';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -141,9 +142,11 @@ function MarketplaceContent() {
 
 export default function App() {
   return (
-    <CartProvider>
-      <MarketplaceContent />
-    </CartProvider>
+    <WishlistProvider>
+      <CartProvider>
+        <MarketplaceContent />
+      </CartProvider>
+    </WishlistProvider>
   );
 }
 

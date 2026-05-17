@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ShoppingCart, User, Menu, X, ChevronDown, Rocket, LogOut } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, X, ChevronDown, Rocket, LogOut, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { auth } from '../lib/firebase';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
 export const Navbar = ({ onCartClick }: { onCartClick: () => void }) => {
   const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -85,6 +87,17 @@ export const Navbar = ({ onCartClick }: { onCartClick: () => void }) => {
               <span>Login</span>
             </button>
           )}
+
+          <button 
+            className="relative p-2 hover:bg-white/10 rounded-full transition-colors group"
+          >
+            <Heart size={22} className="group-hover:scale-110 transition-transform" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center animate-bounce">
+                {wishlistCount}
+              </span>
+            )}
+          </button>
 
           <button 
             onClick={onCartClick}
